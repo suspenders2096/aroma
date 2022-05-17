@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
     <title>Личный кабинет пользователя</title>
   </head>
-
   <body>
     <div class="container-fluid">
         <div class="row mt-5">
@@ -19,33 +18,111 @@
             </div>
             <div class="col-9">
                 <div class="tab-content" id="v-pills-tabContent">
-                    <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">Страница с профилем</div>
-                    <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">Страница с сообщениями</div>
-                    <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">Страница с настройками</div>
+                    <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                      <div class="row mt-5">
+                        <div class="col-sm-3">
+                          <img src="../../img/blog/author.png" alt="">
+                        </div>
+                        <div class="col-sm-9">
+                          <h1 id="userName"></h1>
+                          <h2>О себе</h2>
+                          <p>Принимая во внимание показатели успешности, высокотехнологичная концепция общественного уклада влечет за собой процесс внедрения и модернизации дальнейших направлений развития. Учитывая ключевые сценарии поведения, высокое качество позиционных исследований предполагает независимые способы реализации экспериментов, поражающих по своей масштабности и грандиозности.</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <div class="col-3">
+                            <img src="../../img/blog/next.jpg" alt="">
+                          </div>
+                          <div class="col-9">
+                            <div>
+                              <h5>Юлия Семенова</h5>
+                              <p>Да, завтра могу встретиться.</p>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div class="col-sm-6">
+                          <div class="col-3">
+                            <img src="../../img/blog/author.png" width="50%" alt="">
+                          </div>
+                          <div class="col-9">
+                            <div>
+                              <h5>Пётр Петров</h5>
+                              <p>Завтра как?</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <div class="col-3">
+                            <img src="../../img/blog/c5.jpg" alt="">
+                          </div>
+                          <div class="col-9">
+                            <div>
+                              <h5>Семен Семёныч</h5>
+                              <p>Поехали на рыбалку в выходные?</p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                          <div class="col-3">
+                            <img src="../../img/blog/author.png" width="50%" alt="">
+                          </div>
+                          <div class="col-9">
+                            <div>
+                              <h5>Пётр Петров</h5>
+                              <p>Я за! Удочки брать?</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-8"><textarea cols="40" rows="1"></textarea></div>
+                        <div class="col-4"><button class="btn btn-warning">Отправить</button></div>
+                      </div>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Lastname</th>
+                            <th scope="col">Email</th>
+                          </tr>
+                        </thead>
+                        <tbody id="userListTable">
+                        </tbody>
+                      </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
   
-
-
     <script>
       let path = location.pathname.split("/")[2];
-      // $(window).on("popstate", function(e) {
-      //   let pathPop = location.pathname.split("/")[2]
-      //   if (pathPop == "profile") {
-      //     $('#v-pills-profile').tab('show');
-      //   } else if (pathPop == "messages") {
-      //     $('#v-pills-messages').tab('show');
-      //   } else if (pathPop == "settings") {
-      //     $('#v-pills-settings').tab('show');
-      //   }
-      //   document.getElementById(path + "Tab").classList.add("active");
-      // })
+      let user;
+
+      async function getUser() {
+        let response = await fetch("/getUser");  // отправляет запрос на сервер о данных пользователя
+        return await response.json();  // возвращает полученные данные в json формате
+      }
+
+      async function getUsers() {
+        let response = await fetch("/getUsers");  
+        return await response.json();  
+      }
+
       addEventListener('popstate', event => {
         let pathPop = location.pathname.split("/")[2]
         if (pathPop == "profile") {
@@ -60,14 +137,34 @@
         }
       });
       if (path == "profile") {
+        // user = getUser();
+        // user.then((result) => {
+        //   console.log(result);
+        // })
+        getUser().then((user) => {
+          userName.innerText = `${user.name} ${user.lastname}`;
+          
+        });
+
         $('#v-pills-profile').tab('show');
-        //console.log(path);
       } else if (path == "messages") {
         $('#v-pills-messages').tab('show');
-        //console.log(path);
       } else if (path == "settings") {
+        getUsers().then(users => {
+          // console.log(users);
+          for (let i = 0; i < users.length; i++) {
+            div.insertAdjacentHTML('beforeend', `
+            <tr>
+              <th scope="row">${users[i].id}</th>
+                <td>${users[i].name}</td>
+                <td>${users[i].lastname}</td>
+                <td>${users[i].email}</td>
+            </tr>
+            `);
+            // userListTable.innerHTML += ;
+          }
+        })
         $('#v-pills-settings').tab('show');
-        //console.log(path);
       } else {
         location.href = location.protocol + "//" + location.host;
       }
@@ -81,6 +178,5 @@
         })
       }
   </script>
-
   </body>
 </html>
